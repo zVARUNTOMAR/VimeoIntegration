@@ -5,7 +5,7 @@ import { VideocontainerComponent } from './_components/videocontainer/videoconta
 
 const routes: Routes = [
   {
-    path: 'video',
+    path: '',
     component: VideocontainerComponent,
   },
   {

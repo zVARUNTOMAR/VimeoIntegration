@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommonService } from '../../_services/common.service';
 import Player from '@vimeo/player';
+import { Video } from 'src/_models/video';
 // import { timeStamp } from 'console';
 
 @Component({
@@ -26,7 +27,6 @@ export class VideocontainerComponent implements OnInit {
       this.videos = data;
       this.videos = {
         ...this.videos,
-        required: true,
       };
       this.injectFrame();
     });
@@ -34,24 +34,26 @@ export class VideocontainerComponent implements OnInit {
 
   injectFrame() {
     const container = this.frameContainer?.nativeElement;
-    const title = document.createElement('h3');
-    const author = document.createElement('p');
-    author.innerHTML = this.videos.user.name;
-    title.innerHTML = this.videos?.name;
-    // title.classList.add('heading');
-    const iframe = document.createElement('iframe');
-    iframe.setAttribute('width', '100%');
-    iframe.setAttribute('src', this.videos?.player_embed_url);
-    iframe.setAttribute('width', '600');
-    iframe.setAttribute('height', '400');
-    iframe.setAttribute('frameBorder', '0');
-    let player = new Player(iframe);
-    player.on('play', () => {
-      this.videos.required = false;
+    console.log(this.videos);
+    Object.keys(this.videos).forEach((element) => {
+      const title = document.createElement('h3');
+      title.innerHTML = this.videos[element].title;
+      const iframe = document.createElement('iframe');
+      iframe.setAttribute('src', this.videos[element].videoUrl);
+      iframe.setAttribute('width', '400');
+      iframe.setAttribute('height', '300');
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('allowfullscreen', '1');
+      iframe.setAttribute('allow', 'autoplay; fullscreen');
+      container.appendChild(iframe);
     });
+    // let player = new Player(iframe);
+    // player.on('play', () => {
+    //   this.videos.required = false;
+    // });
     // console.log(this.videos);
-    container.appendChild(title);
-    container.appendChild(author);
-    container.appendChild(iframe);
+    // container.appendChild(title);
+    // container.appendChild(author);
+    // container.appendChild(iframe);
   }
 }

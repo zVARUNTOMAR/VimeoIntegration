@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { CommonService } from '../../_services/common.service';
 import Player from '@vimeo/player';
 import { Video } from 'src/_models/video';
+import { Router } from '@angular/router';
 // import { timeStamp } from 'console';
 
 @Component({
@@ -12,7 +13,7 @@ import { Video } from 'src/_models/video';
 })
 export class VideocontainerComponent implements OnInit {
   videos: any;
-  constructor(public commonService: CommonService) {}
+  constructor(public commonService: CommonService, private router: Router) {}
 
   @ViewChild('framecontainer') frameContainer!: ElementRef;
 
@@ -34,7 +35,7 @@ export class VideocontainerComponent implements OnInit {
 
   injectFrame() {
     const container = this.frameContainer?.nativeElement;
-    console.log(this.videos);
+    // console.log(this.videos);
     Object.keys(this.videos).forEach((element) => {
       const title = document.createElement('h3');
       title.innerHTML = this.videos[element].title;
@@ -45,15 +46,31 @@ export class VideocontainerComponent implements OnInit {
       iframe.setAttribute('frameborder', '0');
       iframe.setAttribute('allowfullscreen', '1');
       iframe.setAttribute('allow', 'autoplay; fullscreen');
+      iframe.setAttribute('id', element);
+
+      let player = new Player(iframe);
+      player.on('play', () => {
+        this.videos[element].isRequired = false;
+      });
       container.appendChild(iframe);
     });
-    // let player = new Player(iframe);
-    // player.on('play', () => {
-    //   this.videos.required = false;
-    // });
+  }
+
+  validate() {
     // console.log(this.videos);
-    // container.appendChild(title);
-    // container.appendChild(author);
-    // container.appendChild(iframe);
+    let message = '';
+    let flag = false;
+    Object.keys(this.videos).forEach((element) => {
+      if (this.videos[element].isRequired) {
+        message = 'Please watch all videos';
+        flag = true;
+      }
+    });
+
+    if (flag) {
+      alert(message);
+    } else {
+      this.router.navigate(['/end']);
+    }
   }
 }

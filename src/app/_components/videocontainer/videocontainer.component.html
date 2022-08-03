@@ -1,9 +1,6 @@
-<nav>
-  <h3>Vimeo Integration</h3>
-</nav>
 <div #framecontainer class="frame-container"></div>
 <div class="container">
-  <button class="btn" [routerLink]="['/end']">NEXT</button>
+  <button class="btn" (click)="validate()">NEXT</button>
 </div>
 
 <!-- [disabled]="videos?.required" -->

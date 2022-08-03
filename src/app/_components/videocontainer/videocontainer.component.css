@@ -42,6 +42,7 @@ div{
     margin-right: 10px;
     flex-wrap: wrap;
     margin-top: 60px;
+    gap:10px;
 }
 
 .heading{

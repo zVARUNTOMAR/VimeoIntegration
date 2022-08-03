@@ -58,11 +58,11 @@ export class VideocontainerComponent implements OnInit {
 
   validate() {
     // console.log(this.videos);
-    let message = '';
+    let message = 'Please watch listed videos';
     let flag = false;
     Object.keys(this.videos).forEach((element) => {
       if (this.videos[element].isRequired) {
-        message = 'Please watch all videos';
+        message = message + '\n - ' + this.videos[element].title + '';
         flag = true;
       }
     });

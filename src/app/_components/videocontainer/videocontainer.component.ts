@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class VideocontainerComponent implements OnInit {
   videos: any;
+  playerUrl = 'http://player.vimeo.com/video/';
   constructor(public commonService: CommonService, private router: Router) {}
 
   @ViewChild('framecontainer') frameContainer!: ElementRef;
@@ -40,7 +41,10 @@ export class VideocontainerComponent implements OnInit {
       const title = document.createElement('h3');
       title.innerHTML = this.videos[element].title;
       const iframe = document.createElement('iframe');
-      iframe.setAttribute('src', this.videos[element].videoUrl);
+      iframe.setAttribute(
+        'src',
+        this.playerUrl + this.videos[element].videoUrl.substring(18)
+      );
       iframe.setAttribute('width', '400');
       iframe.setAttribute('height', '300');
       iframe.setAttribute('frameborder', '0');

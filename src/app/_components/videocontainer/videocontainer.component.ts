@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class VideocontainerComponent implements OnInit {
   videos: any;
-  playerUrl = 'http://player.vimeo.com/video/';
+  playerUrl = 'https://player.vimeo.com/video/';
   constructor(public commonService: CommonService, private router: Router) {}
 
   @ViewChild('framecontainer') frameContainer!: ElementRef;
